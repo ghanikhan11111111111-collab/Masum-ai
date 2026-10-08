@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ps" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Masum AI</title>
+<style>
+body{margin:0;background:#0b1020;color:white;font-family:Arial,sans-serif}
+header{padding:20px;text-align:center;background:#111936}
+h1{margin:0;color:#63d8ff}
+#chat{height:65vh;overflow:auto;padding:15px}
+.msg{padding:12px;margin:10px 0;border-radius:14px;max-width:85%}
+.user{background:#174c68;margin-right:auto}
+.ai{background:#202942;margin-left:auto}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:#111936;padding:10px;display:flex;gap:8px}
+input{flex:1;padding:14px;border:0;border-radius:12px;font-size:16px}
+button{border:0;border-radius:12px;padding:12px 16px;background:#35b9e8;color:white;font-size:16px}
+</style>
+</head>
+<body>
+
+<header>
+<h1>🤖 Masum AI</h1>
+<div>ستاسو پښتو AI مرستیال</div>
+</header>
+
+<div id="chat">
+<div class="msg ai">سلام! زه Masum AI یم. څنګه مرسته درسره وکړم؟</div>
+</div>
+
+<div class="bottom">
+<input id="input" placeholder="خپله پوښتنه ولیکئ...">
+<button onclick="send()">لېږل</button>
+<button onclick="voice()">🎤</button>
+</div>
+
+<script>
+function send(){
+ let x=document.getElementById("input");
+ let q=x.value.trim();
+ if(!q)return;
+
+ let chat=document.getElementById("chat");
+ chat.innerHTML+=`<div class="msg user">${q}</div>`;
+ x.value="";
+
+ setTimeout(()=>{
+ chat.innerHTML+=`<div class="msg ai">ستاسې پوښتنه مې واورېده. Masum AI به ډېر ژر د اصلي AI سره وصل شي. 🤖</div>`;
+ chat.scrollTop=chat.scrollHeight;
+ },500);
+
+ chat.scrollTop=chat.scrollHeight;
+}
+
+function voice(){
+ if(!("webkitSpeechRecognition" in window)){
+   alert("ستاسې براوزر د غږ پېژندنه نه ملاتړ کوي.");
+   return;
+ }
+ let r=new webkitSpeechRecognition();
+ r.lang="ps-AF";
+ r.start();
+ r.onresult=function(e){
+   document.getElementById("input").value=e.results[0][0].transcript;
+ };
+}
+</script>
+
+</body>
+</html>
